@@ -1,5 +1,6 @@
 package com.example.planty
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,10 +27,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+    Surface {
+        Text(text = "Hello $name!")
+    }
 }
 
-@Preview(showBackground = true)
+@Preview(name = "default")
+@Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun DefaultPreview() {
     PlantyTheme {
