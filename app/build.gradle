@@ -93,6 +93,7 @@ dependencies {
     androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
 
     /* Navigation */
+    implementation "androidx.navigation:navigation-compose:$compose_nav_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$navigation_version"

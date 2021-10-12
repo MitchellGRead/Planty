@@ -26,6 +26,7 @@ buildscript {
 
         /* Navigation */
         navigation_version = '2.3.5'
+        compose_nav_version = '2.4.0-alpha10'
 
         /* Room */
         room_version = '2.3.0'
