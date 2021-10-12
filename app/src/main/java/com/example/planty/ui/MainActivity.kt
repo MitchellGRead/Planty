@@ -1,4 +1,4 @@
-package com.example.planty
+package com.example.planty.ui
 
 import android.content.res.Configuration
 import android.os.Bundle
