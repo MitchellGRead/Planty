@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.planty.ui.PlantyApp
 import com.example.planty.ui.theme.PlantyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,25 +43,11 @@ class MainActivity : ComponentActivity() {
             PlantyTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    PlantyApp()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Surface {
-        Text(text = "Hello $name!")
-    }
-}
 
-@Preview(name = "default")
-@Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun DefaultPreview() {
-    PlantyTheme {
-        Greeting("Android")
-    }
-}
