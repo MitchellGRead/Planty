@@ -21,6 +21,9 @@ buildscript {
         /* Compose */
         compose_version = '1.0.5'
 
+        /* Accompanist */
+        accompanist_version = '0.19.0'
+
         /* Lifecycle */
         lifecycle_version = '2.3.1'
 
