@@ -14,7 +14,7 @@ fun PlantyNavGraph(
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
         composable(PlantyDestinations.HOME_SCREEN_ROUTE) {
-            HomeScreen(name = "Mitchell")
+            HomeScreen()
         }
     }
 }

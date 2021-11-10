@@ -8,5 +8,6 @@ object Dimen {
     val XL = 12.dp
     val XXL = 16.dp
 
+    val Zero = 0.dp
     val Hundred = 100.dp
 }
