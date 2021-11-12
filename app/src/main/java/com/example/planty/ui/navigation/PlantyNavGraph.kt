@@ -5,16 +5,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.planty.ui.home.HomeScreen
+import com.example.planty.ui.home.HomeScreenView
 
 @Composable
 fun PlantyNavGraph(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = PlantyDestinations.HOME_SCREEN_ROUTE
+    startDestination: String = HomeScreenRoute.route
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
-        composable(PlantyDestinations.HOME_SCREEN_ROUTE) {
-            HomeScreen()
+        composable(HomeScreenRoute.route) {
+            HomeScreenView()
         }
     }
 }

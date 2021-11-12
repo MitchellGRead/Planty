@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Planty</string>
     <string name="Planty">Planty</string>
+    <string name="AddPlantEntry">Add Plant Entry Button</string>
+    <string name="Home">Home</string>
 </resources>
