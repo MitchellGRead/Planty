@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -71,9 +72,6 @@ dependencies {
     /* Activity */
     implementation "androidx.activity:activity-compose:$activity_compose_version"
 
-    /* Fragment */
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
-
     /* Material Theme */
     implementation "com.google.android.material:material:$material_version"
 
@@ -90,12 +88,12 @@ dependencies {
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 
     /* Lifecycle */
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
     /* Hilt */
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    annotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
+    kapt("com.google.dagger:hilt-compiler:$hilt_version")
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     testAnnotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
@@ -103,9 +101,6 @@ dependencies {
 
     /* Navigation */
     implementation "androidx.navigation:navigation-compose:$compose_nav_version"
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
-    androidTestImplementation "androidx.navigation:navigation-testing:$navigation_version"
 
     /* Room */
     implementation "androidx.room:room-runtime:$room_version"
