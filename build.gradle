@@ -28,8 +28,8 @@ buildscript {
         hilt_version = '2.40.1'
 
         /* Navigation */
-//        compose_nav_version = '2.4.0-alpha10'
-        compose_nav_version = '2.4.0-beta02'
+        hilt_nav_compose_verison = '1.0.0-beta01'
+//        compose_nav_version = '2.4.0-beta02'
 
         /* Room */
         room_version = '2.3.0'
