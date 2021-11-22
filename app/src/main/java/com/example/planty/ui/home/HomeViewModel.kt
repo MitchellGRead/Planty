@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
         updatePlantEntries()
     }
 
-    private fun updatePlantEntries() {
+    fun updatePlantEntries() {
         _uiState.update { HomeUiState(loading = true) }
 
         val card = PlantEntry(id = "1", name = "Planty")
