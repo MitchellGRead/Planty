@@ -4,10 +4,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import com.example.planty.R
 import com.example.planty.ui.common.composables.InsetAwareTopAppBar
@@ -21,10 +18,15 @@ import timber.log.Timber
 @Composable
 fun HomeScreenView(
     viewModel: HomeViewModel,
-    scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val currBottomNavRoute = remember { mutableStateOf(HomeScreenRoute) }
+    val scaffoldState = rememberScaffoldState()
+
+    DisposableEffect(key1 = "onStart") {
+        viewModel.onStart()
+        onDispose {  }
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -34,7 +36,7 @@ fun HomeScreenView(
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = { HomeScreenBottomBar(currBottomNavRoute.value) }
     ) {
-        PlantCardGrid(cards = uiState.value)
+        PlantCardGrid(cards = uiState.value.plantEntries)
     }
 }
 
