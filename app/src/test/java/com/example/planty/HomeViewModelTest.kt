@@ -34,11 +34,9 @@ class HomeScreenViewModelTest {
     }
 
     @Test
-    fun `WHEN updatePlantEntries THEN state goes from loading to loaded with plant entries`() = coroutineRule.runBlockingTest {
-        val card = PlantEntry(id = "1", name = "Planty")
-        val cards: List<PlantEntry> = listOf(card, card, card, card,card, card, card, card,card, card, card, card)
+    fun `WHEN updatePlantEntries THEN uiState goes from loading to loaded`() = coroutineRule.runBlockingTest {
         val firstState = HomeUiState(loading = true)
-        val secondState = HomeUiState(plantEntries = cards)
+        val secondState = HomeUiState(loading = false)
         val actuals = mutableListOf<HomeUiState>()
         val job = launch {
             viewModel.uiState.toList(actuals)
@@ -49,6 +47,16 @@ class HomeScreenViewModelTest {
         assertEquals(firstState, actuals[0])
         assertEquals(secondState, actuals[1])
         job.cancel()
+    }
+
+    @Test
+    fun `WHEN createPlantEntry THEN uiState updated with new entry`() {
+        val card = PlantEntry(id = "1", name = "Planty")
+        val uiState = HomeUiState(plantEntries = listOf(card))
+
+        viewModel.createPlantEntry()
+
+        assertEquals(uiState, viewModel.uiState.value)
     }
 
 }

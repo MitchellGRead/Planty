@@ -28,15 +28,30 @@ fun HomeScreenView(
         onDispose {  }
     }
 
+    HomeScreen(
+        uiState = uiState.value,
+        onFabClicked = { viewModel.createPlantEntry() },
+        currentRoute = currBottomNavRoute.value,
+        scaffoldState = scaffoldState
+    )
+}
+
+@Composable
+fun HomeScreen(
+    uiState: HomeUiState,
+    onFabClicked: () -> Unit,
+    currentRoute: PlantyRoute,
+    scaffoldState: ScaffoldState
+) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { HomeScreenTopBar() },
-        floatingActionButton = { HomeScreenFAB() },
+        floatingActionButton = { HomeScreenFAB(onFabClicked) },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
-        bottomBar = { HomeScreenBottomBar(currBottomNavRoute.value) }
+        bottomBar = { HomeScreenBottomBar(currentRoute = currentRoute) }
     ) {
-        PlantCardGrid(cards = uiState.value.plantEntries)
+        PlantCardGrid(cards = uiState.plantEntries)
     }
 }
 
@@ -50,9 +65,12 @@ fun HomeScreenTopBar() {
 }
 
 @Composable
-fun HomeScreenFAB() {
+fun HomeScreenFAB(onClick: () -> Unit) {
     FloatingActionButton(
-        onClick = { Timber.d("FAB Clicked") },
+        onClick = {
+            onClick()
+            Timber.d("Home Screen FAB Clicked")
+        },
         shape = CircleShape
     ) {
         Icon(
