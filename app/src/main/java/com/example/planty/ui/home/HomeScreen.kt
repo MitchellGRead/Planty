@@ -1,10 +1,13 @@
 package com.example.planty.ui.home
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.planty.R
 import com.example.planty.ui.common.composables.InsetAwareTopAppBar
@@ -51,7 +54,9 @@ fun HomeScreen(
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = { HomeScreenBottomBar(currentRoute = currentRoute) }
     ) {
-        PlantCardGrid(cards = uiState.plantEntries)
+        Box(modifier = Modifier.padding(it)) {
+            PlantCardGrid(cards = uiState.plantEntries)
+        }
     }
 }
 
