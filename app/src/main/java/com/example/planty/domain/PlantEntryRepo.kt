@@ -1,18 +1,19 @@
 package com.example.planty.domain
 
 import com.example.planty.domain.model.PlantEntry
-import com.example.planty.hilt.AppIoScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import com.example.planty.hilt.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 class PlantEntryRepo(
-    @AppIoScope private val appIoScope: CoroutineScope,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
     private var cards: List<PlantEntry> = listOf()
     private val card = PlantEntry(id = "1", name = "Planty")
 
-    fun createPlantEntry() {
-        appIoScope.launch {
+    suspend fun createPlantEntry() {
+        withContext(ioDispatcher) {
+
             cards = cards + listOf(card)
         }
     }

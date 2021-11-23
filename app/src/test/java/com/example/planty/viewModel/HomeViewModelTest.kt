@@ -77,7 +77,7 @@ class HomeScreenViewModelTest {
     }
 
     @Test
-    fun `WHEN createPlantEntry THEN uiState updated with new entry`() {
+    fun `WHEN createPlantEntry THEN uiState updated with new entry`() = coroutineRule.runBlockingTest {
         val entries = listOf(PlantEntryFactory.basicPlantEntry)
         whenever(mockPlantEntryRepo.fetchPlantEntries()).thenReturn(entries)
         val uiState = HomeUiState(plantEntries = entries)

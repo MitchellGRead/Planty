@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -15,10 +15,10 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun providePlantEntryRepo(
-        @AppIoScope appIoScope: CoroutineScope
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): PlantEntryRepo {
         return PlantEntryRepo(
-            appIoScope = appIoScope
+            ioDispatcher = ioDispatcher,
         )
     }
 }
