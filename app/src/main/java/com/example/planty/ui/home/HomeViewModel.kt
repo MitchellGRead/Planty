@@ -2,7 +2,7 @@ package com.example.planty.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.planty.domain.model.PlantEntry
+import com.example.planty.domain.PlantEntryRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,11 +12,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val plantEntryRepo: PlantEntryRepo
+) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState(loading = true))
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
-
-    private val card = PlantEntry(id = "1", name = "Planty")
 
     fun onStart() {
         updatePlantEntries()
@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor() : ViewModel() {
             _uiState.update {
                 HomeUiState(
                     loading = false,
-                    plantEntries = listOf()
+                    plantEntries = plantEntryRepo.fetchPlantEntries()
                 )
             }
         }
@@ -37,9 +37,8 @@ class HomeViewModel @Inject constructor() : ViewModel() {
 
     fun createPlantEntry() {
         viewModelScope.launch {
-            _uiState.update {
-                HomeUiState(plantEntries = listOf(card))
-            }
+            plantEntryRepo.createPlantEntry()
+            updatePlantEntries()
         }
     }
 }
