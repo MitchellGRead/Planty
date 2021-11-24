@@ -63,7 +63,7 @@ fun PlantCard(title: String) {
                 )
             }
             Image(
-                painter = painterResource(id = R.drawable.default_plant),
+                painter = painterResource(id = R.drawable.default_image),
                 contentDescription = "plant",
                 modifier = Modifier
                     .fillMaxWidth()
