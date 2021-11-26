@@ -3,4 +3,5 @@
     <string name="Planty">Planty</string>
     <string name="AddPlantEntry">Add Plant Entry Button</string>
     <string name="Home">Home</string>
+    <string name="Create_Entry">Create Entry</string>
 </resources>
