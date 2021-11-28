@@ -10,7 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.planty.R
-import com.example.planty.ui.common.composables.PlantyTopBar
+import com.example.planty.ui.common.composables.InsetAwareTopAppBar
 import com.example.planty.ui.navigation.HomeScreen
 import com.example.planty.ui.navigation.HomeScreenRoute
 import com.example.planty.ui.navigation.PlantyRoute
@@ -61,7 +61,9 @@ fun HomeScreen(
 
 @Composable
 fun HomeScreenTopBar() {
-    PlantyTopBar(title = R.string.Planty)
+    InsetAwareTopAppBar(
+        title = { Text(text = stringResource(id = R.string.Planty)) },
+    )
 }
 
 @Composable

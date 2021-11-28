@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.planty.R
-import com.example.planty.ui.common.composables.PlantyTopBar
+import com.example.planty.ui.common.composables.InsetAwareTopAppBar
 import com.example.planty.ui.navigation.HomeScreenRoute
 import com.example.planty.ui.theme.Dimen
 import com.example.planty.ui.theme.PlantyTheme
@@ -55,15 +55,17 @@ fun CreatePlantyView(
 
 @Composable
 fun CreatePlantyTopBar(navigateUp: () -> Unit) {
-    PlantyTopBar(title = R.string.Create_Entry,navigationIcon = {
-        Icon(
-            imageVector = Icons.Filled.ArrowBack,
-            contentDescription = stringResource(R.string.Navigate_Back),
-            modifier = Modifier
-                .padding(start = Dimen.XL)
-                .clickable { navigateUp() })
-
-    })
+    InsetAwareTopAppBar(
+        title = { Text(text = stringResource(id = R.string.Create_Entry)) },
+        navigationIcon = {
+            Icon(
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = stringResource(R.string.Navigate_Back),
+                modifier = Modifier
+                    .padding(start = Dimen.XL)
+                    .clickable { navigateUp() })
+        }
+    )
 }
 
 @Composable
