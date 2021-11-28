@@ -24,7 +24,10 @@ import com.example.planty.ui.theme.Dimen
 import com.example.planty.ui.theme.PlantyTheme
 
 @Composable
-fun CreatePlantyView(viewModel: CreatePlantyViewModel) {
+fun CreatePlantyView(
+    viewModel: CreatePlantyViewModel,
+    onBack: () -> Unit
+) {
     val uiState = viewModel.uiState.collectAsState()
 
     val currBottomNavRoute = remember { mutableStateOf(HomeScreen) }
@@ -32,7 +35,7 @@ fun CreatePlantyView(viewModel: CreatePlantyViewModel) {
 
     CreatePlantyView(
         uiState = uiState.value,
-        navigateUp = {},
+        onBack = onBack,
         scaffoldState = scaffoldState
     )
 }
@@ -40,12 +43,12 @@ fun CreatePlantyView(viewModel: CreatePlantyViewModel) {
 @Composable
 private fun CreatePlantyView(
     uiState: CreatePlantyUiState,
-    navigateUp: () -> Unit,
+    onBack: () -> Unit,
     scaffoldState: ScaffoldState
 ) {
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { CreatePlantyTopBar(navigateUp) }
+        topBar = { CreatePlantyTopBar(onBack) }
     ) {
         Box(modifier = Modifier.padding(it)) {
             CreateEntryCard()
@@ -54,7 +57,7 @@ private fun CreatePlantyView(
 }
 
 @Composable
-private fun CreatePlantyTopBar(navigateUp: () -> Unit) {
+private fun CreatePlantyTopBar(onBack: () -> Unit) {
     InsetAwareTopAppBar(
         title = { Text(text = stringResource(id = R.string.Create_Entry)) },
         navigationIcon = {
@@ -63,7 +66,7 @@ private fun CreatePlantyTopBar(navigateUp: () -> Unit) {
                 contentDescription = stringResource(R.string.Navigate_Back),
                 modifier = Modifier
                     .padding(start = Dimen.XL)
-                    .clickable { navigateUp() })
+                    .clickable { onBack() })
         }
     )
 }
@@ -97,7 +100,7 @@ fun DefaultPreview() {
     PlantyTheme {
         CreatePlantyView(
             uiState = uistate,
-            navigateUp = {},
+            onBack = {},
             scaffoldState = rememberScaffoldState()
         )
     }

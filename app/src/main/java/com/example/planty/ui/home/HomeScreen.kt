@@ -22,6 +22,7 @@ import timber.log.Timber
 @Composable
 fun HomeScreenView(
     viewModel: HomeViewModel,
+    onFabClicked: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val currBottomNavRoute = remember { mutableStateOf(HomeScreen) }
@@ -34,7 +35,10 @@ fun HomeScreenView(
 
     HomeScreenView(
         uiState = uiState.value,
-        onFabClicked = { viewModel.createPlantEntry() },
+        onFabClicked = {
+            viewModel.createPlantEntry()
+            onFabClicked()
+        },
         currentScreen = currBottomNavRoute.value,
         scaffoldState = scaffoldState
     )
