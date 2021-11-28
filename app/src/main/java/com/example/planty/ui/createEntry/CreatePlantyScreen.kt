@@ -30,7 +30,7 @@ fun CreatePlantyView(viewModel: CreatePlantyViewModel) {
     val currBottomNavRoute = remember { mutableStateOf(HomeScreenRoute) }
     val scaffoldState = rememberScaffoldState()
 
-    CreatePlantyView(
+    CreatePlanty(
         uiState = uiState.value,
         navigateUp = {},
         scaffoldState = scaffoldState
@@ -38,7 +38,7 @@ fun CreatePlantyView(viewModel: CreatePlantyViewModel) {
 }
 
 @Composable
-fun CreatePlantyView(
+fun CreatePlanty(
     uiState: CreatePlantyUiState,
     navigateUp: () -> Unit,
     scaffoldState: ScaffoldState
@@ -95,7 +95,7 @@ fun DefaultPreview() {
     val uistate = CreatePlantyUiState(id = "1")
 
     PlantyTheme {
-        CreatePlantyView(
+        CreatePlanty(
             uiState = uistate,
             navigateUp = {},
             scaffoldState = rememberScaffoldState()

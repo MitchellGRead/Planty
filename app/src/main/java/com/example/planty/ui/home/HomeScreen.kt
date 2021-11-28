@@ -1,5 +1,6 @@
 package com.example.planty.ui.home
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -9,12 +10,15 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.planty.R
+import com.example.planty.domain.model.PlantEntry
 import com.example.planty.ui.common.composables.InsetAwareTopAppBar
 import com.example.planty.ui.navigation.HomeScreen
 import com.example.planty.ui.navigation.HomeScreenRoute
 import com.example.planty.ui.navigation.PlantyRoute
 import com.example.planty.ui.navigation.ScheduleScreen
+import com.example.planty.ui.theme.PlantyTheme
 import timber.log.Timber
 
 @Composable
@@ -109,11 +113,21 @@ fun HomeScreenBottomBar(currentRoute: PlantyRoute) {
     }
 }
 
-//@Preview(name = "default")
-//@Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
-//@Composable
-//fun DefaultPreview() {
-//    PlantyTheme {
-//        HomeScreenView()
-//    }
-//}
+@Preview(name = "default")
+@Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun DefaultPreview() {
+    val plantEntry = PlantEntry(id = "2", "Planty")
+    val uiState = HomeUiState(
+        loading = false,
+        plantEntries = listOf(plantEntry, plantEntry, plantEntry)
+    )
+    PlantyTheme {
+        HomeScreen(
+            uiState = uiState,
+            onFabClicked = {},
+            currentRoute = HomeScreenRoute,
+            scaffoldState = rememberScaffoldState()
+        )
+    }
+}
