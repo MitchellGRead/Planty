@@ -5,4 +5,5 @@
     <string name="Home">Home</string>
     <string name="Create_Entry">Create Entry</string>
     <string name="Navigate_Back">Navigate Back</string>
+    <string name="Schedule">Schedule</string>
 </resources>

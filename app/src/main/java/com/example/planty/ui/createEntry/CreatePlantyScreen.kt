@@ -19,33 +19,36 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.planty.R
 import com.example.planty.ui.common.composables.InsetAwareTopAppBar
-import com.example.planty.ui.navigation.HomeScreenRoute
+import com.example.planty.ui.navigation.HomeScreen
 import com.example.planty.ui.theme.Dimen
 import com.example.planty.ui.theme.PlantyTheme
 
 @Composable
-fun CreatePlantyView(viewModel: CreatePlantyViewModel) {
+fun CreatePlantyView(
+    viewModel: CreatePlantyViewModel,
+    onBack: () -> Unit
+) {
     val uiState = viewModel.uiState.collectAsState()
 
-    val currBottomNavRoute = remember { mutableStateOf(HomeScreenRoute) }
+    val currBottomNavRoute = remember { mutableStateOf(HomeScreen) }
     val scaffoldState = rememberScaffoldState()
 
     CreatePlantyView(
         uiState = uiState.value,
-        navigateUp = {},
+        onBack = onBack,
         scaffoldState = scaffoldState
     )
 }
 
 @Composable
-fun CreatePlantyView(
+private fun CreatePlantyView(
     uiState: CreatePlantyUiState,
-    navigateUp: () -> Unit,
+    onBack: () -> Unit,
     scaffoldState: ScaffoldState
 ) {
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { CreatePlantyTopBar(navigateUp) }
+        topBar = { CreatePlantyTopBar(onBack) }
     ) {
         Box(modifier = Modifier.padding(it)) {
             CreateEntryCard()
@@ -54,7 +57,7 @@ fun CreatePlantyView(
 }
 
 @Composable
-fun CreatePlantyTopBar(navigateUp: () -> Unit) {
+private fun CreatePlantyTopBar(onBack: () -> Unit) {
     InsetAwareTopAppBar(
         title = { Text(text = stringResource(id = R.string.Create_Entry)) },
         navigationIcon = {
@@ -63,13 +66,13 @@ fun CreatePlantyTopBar(navigateUp: () -> Unit) {
                 contentDescription = stringResource(R.string.Navigate_Back),
                 modifier = Modifier
                     .padding(start = Dimen.XL)
-                    .clickable { navigateUp() })
+                    .clickable { onBack() })
         }
     )
 }
 
 @Composable
-fun CreateEntryCard() {
+private fun CreateEntryCard() {
     val text = rememberSaveable{ mutableStateOf("") }
     Column(
         modifier = Modifier
@@ -97,7 +100,7 @@ fun DefaultPreview() {
     PlantyTheme {
         CreatePlantyView(
             uiState = uistate,
-            navigateUp = {},
+            onBack = {},
             scaffoldState = rememberScaffoldState()
         )
     }
