@@ -12,10 +12,10 @@ import com.example.planty.ui.home.HomeViewModel
 @Composable
 fun PlantyNavGraph(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = HomeScreenRoute.route
+    startDestination: String = HomeScreen.route
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
-        composable(HomeScreenRoute.route) {
+        composable(HomeScreen.route) {
             val viewModel: HomeViewModel = hiltViewModel(it)
             HomeScreenView(viewModel = viewModel)
         }

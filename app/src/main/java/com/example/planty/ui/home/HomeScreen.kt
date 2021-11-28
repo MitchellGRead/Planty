@@ -15,9 +15,7 @@ import com.example.planty.R
 import com.example.planty.domain.model.PlantEntry
 import com.example.planty.ui.common.composables.InsetAwareTopAppBar
 import com.example.planty.ui.navigation.HomeScreen
-import com.example.planty.ui.navigation.HomeScreenRoute
-import com.example.planty.ui.navigation.PlantyRoute
-import com.example.planty.ui.navigation.ScheduleScreen
+import com.example.planty.ui.navigation.PlantyScreen
 import com.example.planty.ui.theme.PlantyTheme
 import timber.log.Timber
 
@@ -26,7 +24,7 @@ fun HomeScreenView(
     viewModel: HomeViewModel,
 ) {
     val uiState = viewModel.uiState.collectAsState()
-    val currBottomNavRoute = remember { mutableStateOf(HomeScreenRoute) }
+    val currBottomNavRoute = remember { mutableStateOf(HomeScreen) }
     val scaffoldState = rememberScaffoldState()
 
     DisposableEffect(key1 = "onStart") {
@@ -34,19 +32,19 @@ fun HomeScreenView(
         onDispose {  }
     }
 
-    HomeScreen(
+    HomeScreenView(
         uiState = uiState.value,
         onFabClicked = { viewModel.createPlantEntry() },
-        currentRoute = currBottomNavRoute.value,
+        currentScreen = currBottomNavRoute.value,
         scaffoldState = scaffoldState
     )
 }
 
 @Composable
-fun HomeScreen(
+private fun HomeScreenView(
     uiState: HomeUiState,
     onFabClicked: () -> Unit,
-    currentRoute: PlantyRoute,
+    currentScreen: PlantyScreen,
     scaffoldState: ScaffoldState
 ) {
     Scaffold(
@@ -55,7 +53,7 @@ fun HomeScreen(
         floatingActionButton = { HomeScreenFAB(onFabClicked) },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
-        bottomBar = { HomeScreenBottomBar(currentRoute = currentRoute) }
+        bottomBar = { HomeScreenBottomBar(currentScreen = currentScreen) }
     ) {
         Box(modifier = Modifier.padding(it)) {
             PlantCardGrid(cards = uiState.plantEntries)
@@ -64,14 +62,14 @@ fun HomeScreen(
 }
 
 @Composable
-fun HomeScreenTopBar() {
+private fun HomeScreenTopBar() {
     InsetAwareTopAppBar(
         title = { Text(text = stringResource(id = R.string.Planty)) },
     )
 }
 
 @Composable
-fun HomeScreenFAB(onClick: () -> Unit) {
+private fun HomeScreenFAB(onClick: () -> Unit) {
     FloatingActionButton(
         onClick = {
             onClick()
@@ -87,26 +85,26 @@ fun HomeScreenFAB(onClick: () -> Unit) {
 }
 
 @Composable
-fun HomeScreenBottomBar(currentRoute: PlantyRoute) {
+private fun HomeScreenBottomBar(currentScreen: PlantyScreen) {
     BottomAppBar(
         cutoutShape = CircleShape
     ) {
         val bottomNavDests = listOf(
-            HomeScreen,
-            ScheduleScreen
+            HomeDest,
+            ScheduleDest
         )
         BottomNavigation {
-            bottomNavDests.forEach { screen ->
+            bottomNavDests.forEach { nav ->
                 BottomNavigationItem(
-                    selected = screen.dest == currentRoute,
-                    onClick = { Timber.d("Route ${screen.dest.route} clicked") },
-                    label = { screen.label?.let { Text(text = it) }},
-                    icon = { screen.icon?.let {
+                    selected = nav.dest == currentScreen,
+                    onClick = { Timber.d("Route ${nav.dest.route} clicked") },
+                    label = { Text(text = stringResource(id = nav.label)) },
+                    icon = {
                         Icon(
-                            imageVector = it,
-                            contentDescription = stringResource(id = R.string.Home)
+                            imageVector = nav.icon,
+                            contentDescription = stringResource(id = nav.label)
                         )
-                    }}
+                    }
                 )
             }
         }
@@ -123,10 +121,10 @@ fun DefaultPreview() {
         plantEntries = listOf(plantEntry, plantEntry, plantEntry)
     )
     PlantyTheme {
-        HomeScreen(
+        HomeScreenView(
             uiState = uiState,
             onFabClicked = {},
-            currentRoute = HomeScreenRoute,
+            currentScreen = HomeScreen,
             scaffoldState = rememberScaffoldState()
         )
     }

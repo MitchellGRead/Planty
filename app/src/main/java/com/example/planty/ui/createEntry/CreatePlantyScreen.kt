@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.planty.R
 import com.example.planty.ui.common.composables.InsetAwareTopAppBar
-import com.example.planty.ui.navigation.HomeScreenRoute
+import com.example.planty.ui.navigation.HomeScreen
 import com.example.planty.ui.theme.Dimen
 import com.example.planty.ui.theme.PlantyTheme
 
@@ -27,10 +27,10 @@ import com.example.planty.ui.theme.PlantyTheme
 fun CreatePlantyView(viewModel: CreatePlantyViewModel) {
     val uiState = viewModel.uiState.collectAsState()
 
-    val currBottomNavRoute = remember { mutableStateOf(HomeScreenRoute) }
+    val currBottomNavRoute = remember { mutableStateOf(HomeScreen) }
     val scaffoldState = rememberScaffoldState()
 
-    CreatePlanty(
+    CreatePlantyView(
         uiState = uiState.value,
         navigateUp = {},
         scaffoldState = scaffoldState
@@ -38,7 +38,7 @@ fun CreatePlantyView(viewModel: CreatePlantyViewModel) {
 }
 
 @Composable
-fun CreatePlanty(
+private fun CreatePlantyView(
     uiState: CreatePlantyUiState,
     navigateUp: () -> Unit,
     scaffoldState: ScaffoldState
@@ -54,7 +54,7 @@ fun CreatePlanty(
 }
 
 @Composable
-fun CreatePlantyTopBar(navigateUp: () -> Unit) {
+private fun CreatePlantyTopBar(navigateUp: () -> Unit) {
     InsetAwareTopAppBar(
         title = { Text(text = stringResource(id = R.string.Create_Entry)) },
         navigationIcon = {
@@ -69,7 +69,7 @@ fun CreatePlantyTopBar(navigateUp: () -> Unit) {
 }
 
 @Composable
-fun CreateEntryCard() {
+private fun CreateEntryCard() {
     val text = rememberSaveable{ mutableStateOf("") }
     Column(
         modifier = Modifier
@@ -95,7 +95,7 @@ fun DefaultPreview() {
     val uistate = CreatePlantyUiState(id = "1")
 
     PlantyTheme {
-        CreatePlanty(
+        CreatePlantyView(
             uiState = uistate,
             navigateUp = {},
             scaffoldState = rememberScaffoldState()
