@@ -15,7 +15,6 @@ import com.example.planty.ui.navigation.HomeScreen
 import com.example.planty.ui.navigation.HomeScreenRoute
 import com.example.planty.ui.navigation.PlantyRoute
 import com.example.planty.ui.navigation.ScheduleScreen
-import com.example.planty.ui.theme.Dimen
 import timber.log.Timber
 
 @Composable
@@ -63,9 +62,7 @@ fun HomeScreen(
 @Composable
 fun HomeScreenTopBar() {
     InsetAwareTopAppBar(
-        title = { Text(stringResource(R.string.Planty)) },
-        backgroundColor = MaterialTheme.colors.surface,
-        elevation = Dimen.Zero
+        title = { Text(text = stringResource(id = R.string.Planty)) },
     )
 }
 
