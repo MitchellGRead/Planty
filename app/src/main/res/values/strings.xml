@@ -7,4 +7,5 @@
     <string name="Navigate_Back">Navigate Back</string>
     <string name="Schedule">Schedule</string>
     <string name="loading_image_description">loading image</string>
+    <string name="DropDown">DropDown</string>
 </resources>
