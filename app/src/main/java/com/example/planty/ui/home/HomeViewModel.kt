@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.planty.domain.PlantEntryRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,6 +28,7 @@ class HomeViewModel @Inject constructor(
 
         viewModelScope.launch {
             _uiState.update {
+                delay(500)
                 HomeUiState(
                     loading = false,
                     plantEntries = plantEntryRepo.fetchPlantEntries()

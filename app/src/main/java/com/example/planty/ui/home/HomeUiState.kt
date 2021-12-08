@@ -6,5 +6,8 @@ import com.example.planty.shared.ErrorMessage
 data class HomeUiState(
     val loading: Boolean = false,
     val plantEntries: List<PlantEntry> = listOf(),
-    val error: List<ErrorMessage> = listOf()
-)
+    val errorMsgs: List<ErrorMessage> = listOf()
+) {
+    val initialLoad: Boolean
+        get() = plantEntries.isEmpty() && errorMsgs.isEmpty()
+}
