@@ -6,9 +6,9 @@
         android:name=".PlantyApplication"
         android:allowBackup="true"
         android:fullBackupOnly="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/planty_icon_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/planty_icon_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Planty">
         <activity
