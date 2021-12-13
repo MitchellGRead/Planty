@@ -8,7 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.*
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
@@ -31,6 +35,7 @@ fun OutlinedDropdownMenu(
     @StringRes label: Int,
     menuOptions: List<String>,
     onOptionSelected: (String) -> Unit,
+    leadingIcon: @Composable (() -> Unit)? = null,
 ) {
     val expanded = remember { mutableStateOf(false) }
     val selectedOption = remember { mutableStateOf("") }
@@ -47,6 +52,7 @@ fun OutlinedDropdownMenu(
             value = selectedOption.value,
             onValueChange = { selectedOption.value = it },
             label = { Text(text = stringResource(id = label)) },
+            leadingIcon = leadingIcon,
             trailingIcon = { Icon(
                 imageVector = icon,
                 contentDescription = ""

@@ -1,5 +1,6 @@
 package com.example.planty.ui.common.composables
 
+import android.content.res.Configuration
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Slider
 import androidx.compose.material.SliderColors
@@ -21,7 +23,11 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.planty.ui.theme.Dimen
+import com.example.planty.ui.theme.PlantyTheme
+import com.example.planty.ui.theme.Shapes
 import kotlin.math.floor
 
 @Composable
@@ -95,3 +101,26 @@ private fun customSliderColors(): SliderColors = SliderDefaults.colors(
     activeTickColor = Color.Transparent,
     inactiveTickColor = Color.Transparent
 )
+
+@Preview(name = "default")
+@Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun DefaultPreview() {
+    val sliderValues = listOf("less", "less more", "more", "more less", "most")
+
+    PlantyTheme {
+        Card(
+            shape = Shapes.large,
+            modifier = Modifier
+                .padding(Dimen.L)
+                .fillMaxWidth()
+        ) {
+            DashedSlider(
+                sliderValues = sliderValues,
+                value = (sliderValues.size / 2).toFloat(),
+                onValueChange = {}
+            )
+        }
+
+    }
+}
