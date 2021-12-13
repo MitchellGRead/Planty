@@ -8,4 +8,10 @@
     <string name="Schedule">Schedule</string>
     <string name="loading_image_description">loading image</string>
     <string name="DropDown">DropDown</string>
+    <string name="Name">Name</string>
+    <string name="Location">Location</string>
+    <string name="Plant_Type">Plant Type</string>
+    <string name="Adoption_Date">Adoption Date</string>
+    <string name="Water">Water</string>
+    <string name="Light">Light</string>
 </resources>

@@ -19,3 +19,5 @@ val Blue800 = Color(0xFF001CCF)
 
 val Red300 = Color(0xFFEA6D7E)
 val Red800 = Color(0xFFD00036)
+
+val AndroidHint = Color(0xFFA8A8A8)
