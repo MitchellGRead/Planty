@@ -225,7 +225,7 @@ private fun MenuSpacer() {
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun DefaultPreview() {
-    val uistate = CreatePlantyUiState(id = "1")
+    val uistate = CreatePlantyUiState()
 
     PlantyTheme {
         CreatePlantyView(
