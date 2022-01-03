@@ -13,13 +13,10 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -35,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.planty.R
 import com.example.planty.domain.model.PlantEntry
 import com.example.planty.ui.common.composables.InsetAwareTopAppBar
+import com.example.planty.ui.common.composables.PlusFAB
 import com.example.planty.ui.navigation.HomeScreen
 import com.example.planty.ui.navigation.PlantyScreen
 import com.example.planty.ui.theme.Dimen
@@ -76,7 +74,7 @@ private fun HomeScreenView(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { HomeScreenTopBar() },
-        floatingActionButton = { HomeScreenFAB(onFabClicked) },
+        floatingActionButton = { PlusFAB {onFabClicked} },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = { HomeScreenBottomBar(currentScreen = currentScreen) }
@@ -132,22 +130,6 @@ private fun HomeScreenTopBar() {
     InsetAwareTopAppBar(
         title = { Text(text = stringResource(id = R.string.Planty)) },
     )
-}
-
-@Composable
-private fun HomeScreenFAB(onClick: () -> Unit) {
-    FloatingActionButton(
-        onClick = {
-            onClick()
-            Timber.d("Home Screen FAB Clicked")
-        },
-        shape = CircleShape
-    ) {
-        Icon(
-            imageVector = Icons.Filled.Add,
-            contentDescription = stringResource(R.string.AddPlantEntry)
-        )
-    }
 }
 
 @Composable

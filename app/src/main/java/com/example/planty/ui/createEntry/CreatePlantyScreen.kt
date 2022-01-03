@@ -37,6 +37,7 @@ import com.example.planty.R
 import com.example.planty.ui.common.composables.DashedSlider
 import com.example.planty.ui.common.composables.InsetAwareTopAppBar
 import com.example.planty.ui.common.composables.OutlinedDropdownMenu
+import com.example.planty.ui.common.composables.PlusFAB
 import com.example.planty.ui.navigation.HomeScreen
 import com.example.planty.ui.theme.AndroidHint
 import com.example.planty.ui.theme.Dimen
@@ -56,6 +57,7 @@ fun CreatePlantyView(
     CreatePlantyView(
         uiState = uiState.value,
         onBack = onBack,
+        onFabClicked = {},
         scaffoldState = scaffoldState
     )
 }
@@ -64,11 +66,13 @@ fun CreatePlantyView(
 private fun CreatePlantyView(
     uiState: CreatePlantyUiState,
     onBack: () -> Unit,
+    onFabClicked: () -> Unit,
     scaffoldState: ScaffoldState
 ) {
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { CreatePlantyTopBar(onBack) }
+        topBar = { CreatePlantyTopBar(onBack) },
+        floatingActionButton = { PlusFAB { onFabClicked() } }
     ) {
        CreateEntryCard()
     }
