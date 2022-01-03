@@ -74,7 +74,7 @@ private fun HomeScreenView(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { HomeScreenTopBar() },
-        floatingActionButton = { PlusFAB {onFabClicked} },
+        floatingActionButton = { PlusFAB { onFabClicked() } },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = { HomeScreenBottomBar(currentScreen = currentScreen) }
