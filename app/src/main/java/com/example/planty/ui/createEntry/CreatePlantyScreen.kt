@@ -57,7 +57,10 @@ private fun CreatePlantyView(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { CreatePlantyTopBar(onBack) },
-        floatingActionButton = { PlusFAB { onFabClicked() } }
+        floatingActionButton = { PlusFAB {
+            onFabClicked()
+            onBack()
+        } }
     ) {
         val createEntryCardUiModel = CreateEntryCardUiModel(
             screenState = uiState,
