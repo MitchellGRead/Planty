@@ -85,7 +85,6 @@ class HomeScreenViewModelTest {
         viewModel.createPlantEntry()
 
         assertEquals(uiState, viewModel.uiState.value)
-        verify(mockPlantEntryRepo).createPlantEntry()
         verify(mockPlantEntryRepo).fetchPlantEntries()
     }
 

@@ -28,29 +28,31 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.toSize
-import timber.log.Timber
 
 @Composable
 fun OutlinedDropdownMenu(
     @StringRes label: Int,
     menuOptions: List<String>,
-    onOptionSelected: (String) -> Unit,
+    onOptionChanged: (String) -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
 ) {
-    val expanded = remember { mutableStateOf(false) }
-    val selectedOption = remember { mutableStateOf("") }
-    val dropDownSize = remember { mutableStateOf(Size.Zero) }
+    val (expanded, setExpanded) = remember { mutableStateOf(false) }
+    val (selectedOption, setSelectedOption) = remember { mutableStateOf("") }
+    val (dropDownSize, setDropDownSize) = remember { mutableStateOf(Size.Zero) }
     val focusRequester = remember { FocusRequester() }
     val interactionSource = remember { MutableInteractionSource() }
-    val icon = if (expanded.value) {
+    val icon = if (expanded) {
         Icons.Filled.ArrowDropUp
     } else {
         Icons.Filled.ArrowDropDown
     }
     Box {
         OutlinedTextField(
-            value = selectedOption.value,
-            onValueChange = { selectedOption.value = it },
+            value = selectedOption,
+            onValueChange = {
+                setSelectedOption(it)
+                onOptionChanged(it)
+            },
             label = { Text(text = stringResource(id = label)) },
             leadingIcon = leadingIcon,
             trailingIcon = { Icon(
@@ -63,25 +65,23 @@ fun OutlinedDropdownMenu(
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
                 // So we can assign the same width to the dropdown menu
-                .onGloballyPositioned { coords ->
-                    dropDownSize.value = coords.size.toSize()
-                }
+                .onGloballyPositioned { coords -> setDropDownSize(coords.size.toSize()) }
         )
         DropdownMenu(
-            expanded = expanded.value,
+            expanded = expanded,
             onDismissRequest = {
-                expanded.value = false
-                Timber.d("DropdownMenu: ${expanded.value}")
+                setExpanded(false)
                 focusRequester.freeFocus()
             },
             modifier = Modifier
-                .width(with(LocalDensity.current) { dropDownSize.value.width.toDp() })
+                .width(with(LocalDensity.current) { dropDownSize.width.toDp() })
         ) {
             menuOptions.forEach { option ->
                 DropdownMenuItem(
                     onClick = {
-                        selectedOption.value = option
-                        expanded.value = false
+                        setSelectedOption(option)
+                        onOptionChanged(option)
+                        setExpanded(false)
                     }
                 ) {
                     Text(text = option)
@@ -91,13 +91,13 @@ fun OutlinedDropdownMenu(
 
         // Expand the clickable area to entire text field
         Canvas(modifier = Modifier
-            .width(with(LocalDensity.current) { dropDownSize.value.width.toDp() })
-            .height(with(LocalDensity.current) { dropDownSize.value.height.toDp() })
+            .width(with(LocalDensity.current) { dropDownSize.width.toDp() })
+            .height(with(LocalDensity.current) { dropDownSize.height.toDp() })
             .clickable(
                 interactionSource = interactionSource,
                 indication = null
             ) {
-                expanded.value = true
+                setExpanded(true)
                 focusRequester.requestFocus()
             }
         ) {

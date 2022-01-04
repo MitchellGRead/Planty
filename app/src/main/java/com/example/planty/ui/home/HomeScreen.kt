@@ -13,13 +13,10 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -35,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.planty.R
 import com.example.planty.domain.model.PlantEntry
 import com.example.planty.ui.common.composables.InsetAwareTopAppBar
+import com.example.planty.ui.common.composables.PlusFAB
 import com.example.planty.ui.navigation.HomeScreen
 import com.example.planty.ui.navigation.PlantyScreen
 import com.example.planty.ui.theme.Dimen
@@ -76,7 +74,7 @@ private fun HomeScreenView(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { HomeScreenTopBar() },
-        floatingActionButton = { HomeScreenFAB(onFabClicked) },
+        floatingActionButton = { PlusFAB { onFabClicked() } },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         bottomBar = { HomeScreenBottomBar(currentScreen = currentScreen) }
@@ -135,22 +133,6 @@ private fun HomeScreenTopBar() {
 }
 
 @Composable
-private fun HomeScreenFAB(onClick: () -> Unit) {
-    FloatingActionButton(
-        onClick = {
-            onClick()
-            Timber.d("Home Screen FAB Clicked")
-        },
-        shape = CircleShape
-    ) {
-        Icon(
-            imageVector = Icons.Filled.Add,
-            contentDescription = stringResource(R.string.AddPlantEntry)
-        )
-    }
-}
-
-@Composable
 private fun HomeScreenBottomBar(currentScreen: PlantyScreen) {
     BottomAppBar(
         cutoutShape = CircleShape
@@ -180,7 +162,7 @@ private fun HomeScreenBottomBar(currentScreen: PlantyScreen) {
 @Preview(name = "default")
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DefaultPreview() {
+fun DefaultHomeScreenPreview() {
     val plantEntry = PlantEntry(id = "2", "Planty")
     val uiState = HomeUiState(
         loading = false,
@@ -199,7 +181,7 @@ fun DefaultPreview() {
 @Preview(name = "default")
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DefaultInitialLoadPreview() {
+fun DefaultHomeScreenInitialLoadPreview() {
     val uiState = HomeUiState(
         loading = false,
     )

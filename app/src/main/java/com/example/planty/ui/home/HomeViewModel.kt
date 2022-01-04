@@ -39,7 +39,6 @@ class HomeViewModel @Inject constructor(
 
     fun createPlantEntry() {
         viewModelScope.launch {
-            plantEntryRepo.createPlantEntry()
             updatePlantEntries()
         }
     }

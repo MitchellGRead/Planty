@@ -2,6 +2,7 @@ package com.example.planty.domain
 
 import com.example.planty.domain.model.PlantEntry
 import com.example.planty.hilt.IoDispatcher
+import com.example.planty.ui.createEntry.CreatePlantyUiState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -9,12 +10,14 @@ class PlantEntryRepo(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
     private var cards: List<PlantEntry> = listOf()
-    private val card = PlantEntry(id = "1", name = "Planty")
 
-    suspend fun createPlantEntry() {
+    suspend fun createPlantEntry(plantData: CreatePlantyUiState) {
         withContext(ioDispatcher) {
-
-            cards = cards + listOf(card)
+            val newEntry = PlantEntry(
+                id = "1",
+                name = plantData.plantName
+            )
+            cards = cards + listOf(newEntry)
         }
     }
 
