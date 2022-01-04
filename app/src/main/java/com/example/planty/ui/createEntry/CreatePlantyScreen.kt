@@ -37,7 +37,7 @@ fun CreatePlantyView(
         locationMenuOptions = viewModel.locationMenuOptions,
         plantTypeMenuOptions = viewModel.plantTypeMenuOptions,
         onBack = onBack,
-        onFabClicked = {},
+        onFabClicked = { viewModel.createPlantyEntry() },
         scaffoldState = scaffoldState
     )
 }

@@ -19,9 +19,8 @@ import androidx.compose.material.icons.filled.Room
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.Yard
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,12 +45,12 @@ data class CreateEntryCardUiModel(
 internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
     val screenState = cardUiModel.screenState
 
-    val plantName = rememberSaveable{ mutableStateOf(screenState.plantName) }
-    val adoptionDate = rememberSaveable{ mutableStateOf(screenState.adoptionDate) }
-    val waterReq = rememberSaveable{ mutableStateOf(screenState.waterReq) }
-    val lightReq = rememberSaveable{ mutableStateOf(screenState.lightReq) }
-    val location = rememberSaveable{ mutableStateOf(screenState.location) }
-    val plantType = rememberSaveable{ mutableStateOf(screenState.plantType) }
+    val (plantName, setPlantName) = remember { mutableStateOf(screenState.plantName) }
+    val (adoptionDate, setAdoptionDate) = remember { mutableStateOf(screenState.adoptionDate) }
+    val (waterReq, setWaterReq) = remember { mutableStateOf(screenState.waterReq) }
+    val (lightReq, setLightReq) = remember { mutableStateOf(screenState.lightReq) }
+    val (location, setLocation) = remember { mutableStateOf(screenState.location) }
+    val (plantType, setPlantType) = remember { mutableStateOf(screenState.plantType) }
 
     val sliderValues = cardUiModel.sliderValues
     val adoptionDateMenuOptions = cardUiModel.adoptionDateMenuOptions
@@ -74,7 +73,7 @@ internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
                 text = plantName,
                 leadingIcon = { Icon(imageVector = Icons.Filled.Label, contentDescription = "") },
                 onTextChanged = {
-                    plantName.value = it
+                    setPlantName(it)
                     cardUiModel.onStateUpdate(cardUiModel.screenState.copy(plantName = it))
                 }
             )
@@ -90,8 +89,8 @@ internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
                     tint = AndroidHint
                 ) },
                 onSliderChange = {
-                    waterReq.value = sliderValues[it]
-                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(waterReq = waterReq.value))
+                    setWaterReq(sliderValues[it])
+                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(waterReq = waterReq))
                 }
             )
 
@@ -106,8 +105,8 @@ internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
                     tint = AndroidHint
                 ) },
                 onSliderChange = {
-                    lightReq.value = sliderValues[it]
-                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(lightReq = lightReq.value))
+                    setLightReq(sliderValues[it])
+                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(lightReq = lightReq))
                 }
             )
 
@@ -116,8 +115,8 @@ internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
             OutlinedDropdownMenu(
                 label = R.string.Adoption_Date,
                 menuOptions = adoptionDateMenuOptions,
-                onOptionSelected = {
-                    adoptionDate.value = it
+                onOptionChanged = {
+                    setAdoptionDate(it)
                     cardUiModel.onStateUpdate(cardUiModel.screenState.copy(adoptionDate = it))
                 },
                 leadingIcon = { Icon(imageVector = Icons.Filled.DateRange, contentDescription = "") }
@@ -128,8 +127,8 @@ internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
             OutlinedDropdownMenu(
                 label = R.string.Location,
                 menuOptions = locationMenuOptions,
-                onOptionSelected = {
-                    location.value = it
+                onOptionChanged = {
+                    setLocation(it)
                     cardUiModel.onStateUpdate(cardUiModel.screenState.copy(location = it))
                 },
                 leadingIcon = { Icon(imageVector = Icons.Filled.Room, contentDescription = "") }
@@ -140,8 +139,8 @@ internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
             OutlinedDropdownMenu(
                 label = R.string.Plant_Type,
                 menuOptions = plantTypeMenuOptions,
-                onOptionSelected = {
-                    plantType.value = it
+                onOptionChanged = {
+                    setPlantType(it)
                     cardUiModel.onStateUpdate(cardUiModel.screenState.copy(plantType = it))
                 },
                 leadingIcon = { Icon(imageVector = Icons.Filled.Yard, contentDescription = "") }
@@ -153,12 +152,12 @@ internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
 @Composable
 private fun TextEntry(
     @StringRes label: Int,
-    text: MutableState<String>,
+    text: String,
     leadingIcon: @Composable (() -> Unit)? = null,
     onTextChanged: (String) -> Unit
 ) {
     OutlinedTextField(
-        value = text.value,
+        value = text,
         onValueChange = { onTextChanged(it) },
         label = { Text(stringResource(id = label)) },
         leadingIcon = leadingIcon,
