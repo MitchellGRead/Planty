@@ -162,7 +162,7 @@ private fun HomeScreenBottomBar(currentScreen: PlantyScreen) {
 @Preview(name = "default")
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DefaultPreview() {
+fun DefaultHomeScreenPreview() {
     val plantEntry = PlantEntry(id = "2", "Planty")
     val uiState = HomeUiState(
         loading = false,
@@ -181,7 +181,7 @@ fun DefaultPreview() {
 @Preview(name = "default")
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DefaultInitialLoadPreview() {
+fun DefaultHomeScreenInitialLoadPreview() {
     val uiState = HomeUiState(
         loading = false,
     )
