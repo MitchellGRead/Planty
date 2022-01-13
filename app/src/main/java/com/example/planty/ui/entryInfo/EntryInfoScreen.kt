@@ -11,21 +11,24 @@ import com.example.planty.ui.theme.PlantyTheme
 
 @Composable
 fun EntryInfoView(
-    viewModel: EntryInfoViewModel
+    viewModel: EntryInfoViewModel,
+    onBack: () -> Unit,
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val scaffoldState = rememberScaffoldState()
 
     EntryInfoView(
         uiState = uiState.value,
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        onBack = onBack
     )
 }
 
 @Composable
 private fun EntryInfoView(
     uiState: EntryInfoUiState,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
+    onBack: () -> Unit
 ) {
     Text(text = "Hello")
 }
@@ -39,7 +42,8 @@ fun DefaultCreatePlantScreenPreview() {
     PlantyTheme {
         EntryInfoView(
             uiState = uiState,
-            scaffoldState = rememberScaffoldState()
+            scaffoldState = rememberScaffoldState(),
+            onBack = {}
         )
     }
 }
