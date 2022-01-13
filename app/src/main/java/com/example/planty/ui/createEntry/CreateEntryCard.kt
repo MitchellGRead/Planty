@@ -31,8 +31,8 @@ import com.example.planty.ui.theme.Dimen
 import com.example.planty.ui.theme.Shapes
 
 sealed class SliderTag
-object WaterSlider : SliderTag()
-object LightSlider : SliderTag()
+object WaterSliderTag : SliderTag()
+object LightSliderTag : SliderTag()
 
 sealed class DropdownTag
 object AdoptionTag : DropdownTag()
@@ -76,7 +76,7 @@ internal fun CreateEntryCard(
                     contentDescription = "",
                     tint = AndroidHint
                 ) },
-                onSliderChange = { onSliderUpdated(WaterSlider, it) }
+                onSliderChange = { onSliderUpdated(WaterSliderTag, it) }
             )
 
             MenuSpacer()
@@ -90,7 +90,7 @@ internal fun CreateEntryCard(
                     contentDescription = "",
                     tint = AndroidHint
                 ) },
-                onSliderChange = { onSliderUpdated(LightSlider, it) }
+                onSliderChange = { onSliderUpdated(LightSliderTag, it) }
             )
 
             MenuSpacer()

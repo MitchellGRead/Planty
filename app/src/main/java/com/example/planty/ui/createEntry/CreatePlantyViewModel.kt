@@ -27,34 +27,24 @@ class CreatePlantyViewModel @Inject constructor(
         with(_uiState.value) {
             val sliderValue = sliderValues[sliderPos]
             when (tag) {
-                LightSlider -> updateUiState(copy(lightReq = sliderValue))
-                WaterSlider -> updateUiState(copy(waterReq = sliderValue))
+                LightSliderTag -> updateUiState(copy(lightReq = sliderValue))
+                WaterSliderTag -> updateUiState(copy(waterReq = sliderValue))
             }
         }
     }
 
     fun updateDropdownMenu(tag: DropdownTag, newValue: String) {
-        when (tag) {
-            AdoptionTag -> updateAdoption(newValue)
-            LocationTag -> updateLocation(newValue)
-            PlantTypeTag -> updatePlantType(newValue)
+        with(_uiState.value) {
+            when (tag) {
+                AdoptionTag -> updateUiState(copy(adoptionDate = newValue))
+                LocationTag -> updateUiState(copy(location = newValue))
+                PlantTypeTag -> updateUiState(copy(plantType = newValue))
+            }
         }
     }
 
     private fun updateUiState(newState: CreatePlantyUiState) {
         _uiState.update { newState }
-    }
-
-    private fun updateAdoption(adoption: String) {
-
-    }
-
-    private fun updateLocation(location: String) {
-
-    }
-
-    private fun updatePlantType(plantType: String) {
-
     }
 
     fun createPlantyEntry() {
