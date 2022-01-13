@@ -27,32 +27,41 @@ import com.example.planty.ui.theme.Typography
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PlantCardGrid(cards: List<PlantEntry>) {
+fun PlantCardGrid(
+    cards: List<PlantEntry>,
+    onCardClicked: (id: String) -> Unit
+) {
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),
     ) {
         items(cards.size) { idx ->
             val card = cards[idx]
-            PlantCard(title = card.name)
+            PlantCard(
+                card = card,
+                onCardClicked = onCardClicked
+            )
         }
     }
 }
 
 @Composable
-fun PlantCard(title: String) {
+private fun PlantCard(
+    card: PlantEntry,
+    onCardClicked: (id: String) -> Unit
+) {
     Card(
         shape = Shapes.large,
         modifier = Modifier
             .padding(Dimen.L)
             .fillMaxWidth()
-            .clickable { }
+            .clickable { onCardClicked(card.id) }
     ) {
         Column {
             Column (
                 modifier = Modifier.padding(Dimen.L)
             ){
                 Text(
-                    text = title,
+                    text = card.name,
                     textAlign = TextAlign.Left,
                     style = Typography.h6
                 )
@@ -77,8 +86,13 @@ fun PlantCard(title: String) {
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PlantCardPreview() {
+    val card = PlantEntry(
+        id = "1",
+        name = "I am plant"
+    )
+
     PlantyTheme {
-        PlantCard(title = "title")
+        PlantCard(card = card, onCardClicked = {})
     }
 }
 
@@ -93,6 +107,9 @@ fun PlantCardGridPreview() {
     )
     val cards = listOf(card, card, card, card, card)
     PlantyTheme {
-        PlantCardGrid(cards = cards)
+        PlantCardGrid(
+            cards = cards,
+            onCardClicked = {}
+        )
     }
 }

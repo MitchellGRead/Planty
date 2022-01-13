@@ -9,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.planty.ui.createEntry.CreatePlantyView
 import com.example.planty.ui.createEntry.CreatePlantyViewModel
+import com.example.planty.ui.entryInfo.EntryInfoView
+import com.example.planty.ui.entryInfo.EntryInfoViewModel
 import com.example.planty.ui.home.HomeScreenView
 import com.example.planty.ui.home.HomeViewModel
 
@@ -27,13 +29,22 @@ fun PlantyNavGraph(
             val viewModel: HomeViewModel = hiltViewModel(it)
             HomeScreenView(
                 viewModel = viewModel,
-                onFabClicked = actions.navigateToCreateEntry
+                navigateToCreateEntryScreen = actions.navigateToCreateEntry,
+                navigateToEntryInfoScreen = actions.navigateToEntryInfo
             )
         }
 
         composable(CreateEntryScreen.route) {
             val viewModel: CreatePlantyViewModel = hiltViewModel(it)
             CreatePlantyView(
+                viewModel = viewModel,
+                onBack = actions.navigateUp
+            )
+        }
+
+        composable(EntryInfoScreen.route) {
+            val viewModel: EntryInfoViewModel = hiltViewModel(it)
+            EntryInfoView(
                 viewModel = viewModel,
                 onBack = actions.navigateUp
             )

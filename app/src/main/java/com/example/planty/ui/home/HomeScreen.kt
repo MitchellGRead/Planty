@@ -42,7 +42,8 @@ import timber.log.Timber
 @Composable
 fun HomeScreenView(
     viewModel: HomeViewModel,
-    onFabClicked: () -> Unit
+    navigateToCreateEntryScreen: () -> Unit,
+    navigateToEntryInfoScreen: (id: String) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val currBottomNavRoute = remember { mutableStateOf(HomeScreen) }
@@ -55,10 +56,8 @@ fun HomeScreenView(
 
     HomeScreenView(
         uiState = uiState.value,
-        onFabClicked = {
-            viewModel.createPlantEntry()
-            onFabClicked()
-        },
+        onFabClicked = navigateToCreateEntryScreen,
+        onCardClicked = navigateToEntryInfoScreen,
         currentScreen = currBottomNavRoute.value,
         scaffoldState = scaffoldState
     )
@@ -68,6 +67,7 @@ fun HomeScreenView(
 private fun HomeScreenView(
     uiState: HomeUiState,
     onFabClicked: () -> Unit,
+    onCardClicked: (id: String) -> Unit,
     currentScreen: PlantyScreen,
     scaffoldState: ScaffoldState
 ) {
@@ -84,7 +84,10 @@ private fun HomeScreenView(
             LoadingContent(
                 initialLoad = uiState.initialLoad,
                 initialLoadContent = { HomeLoadingScreen() },
-                content = { PlantCardGrid(cards = uiState.plantEntries) }
+                content = { PlantCardGrid(
+                    cards = uiState.plantEntries,
+                    onCardClicked = onCardClicked
+                ) },
             )
 
         }
@@ -172,6 +175,7 @@ fun DefaultHomeScreenPreview() {
         HomeScreenView(
             uiState = uiState,
             onFabClicked = {},
+            onCardClicked = {},
             currentScreen = HomeScreen,
             scaffoldState = rememberScaffoldState()
         )
@@ -189,6 +193,7 @@ fun DefaultHomeScreenInitialLoadPreview() {
         HomeScreenView(
             uiState = uiState,
             onFabClicked = {},
+            onCardClicked = {},
             currentScreen = HomeScreen,
             scaffoldState = rememberScaffoldState()
         )
