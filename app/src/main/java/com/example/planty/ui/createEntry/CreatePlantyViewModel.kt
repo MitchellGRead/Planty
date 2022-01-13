@@ -19,23 +19,38 @@ class CreatePlantyViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CreatePlantyUiState())
     val uiState: StateFlow<CreatePlantyUiState> = _uiState.asStateFlow()
 
-    val sliderValues: List<String>
-        get() = listOf("very little", "little", "moderate", "lots", "tons")
-    val adoptionDateMenuOptions: List<String>
-        get() = listOf("today", "yesterday", "tomorrow")
-    val locationMenuOptions: List<String>
-        get() = listOf("Living Room", "Bedroom", "Kitchen", "Bathroom")
-    val plantTypeMenuOptions: List<String>
-        get() = listOf("Cactus", "Flower", "Thing")
+    fun updateName(newName: String) {
+        updateUiState(_uiState.value.copy(plantName = newName))
+    }
 
-    fun updateUiState(newState: CreatePlantyUiState) {
+    fun updateSliderValue(tag: SliderTag, sliderPos: Int) {
+        with(_uiState.value) {
+            val sliderValue = sliderValues[sliderPos]
+            when (tag) {
+                LightSliderTag -> updateUiState(copy(lightReq = sliderValue))
+                WaterSliderTag -> updateUiState(copy(waterReq = sliderValue))
+            }
+        }
+    }
+
+    fun updateDropdownMenu(tag: DropdownTag, newValue: String) {
+        with(_uiState.value) {
+            when (tag) {
+                AdoptionTag -> updateUiState(copy(adoptionDate = newValue))
+                LocationTag -> updateUiState(copy(location = newValue))
+                PlantTypeTag -> updateUiState(copy(plantType = newValue))
+            }
+        }
+    }
+
+    private fun updateUiState(newState: CreatePlantyUiState) {
         _uiState.update { newState }
     }
 
     fun createPlantyEntry() {
-        Timber.d("${uiState.value}")
+        Timber.d("${_uiState.value}")
         viewModelScope.launch {
-            plantEntryRepo.createPlantEntry(uiState.value)
+            plantEntryRepo.createPlantEntry(_uiState.value)
         }
     }
 }

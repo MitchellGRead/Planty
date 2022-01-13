@@ -31,11 +31,9 @@ fun CreatePlantyView(
 
     CreatePlantyView(
         uiState = uiState.value,
-        onStateUpdate = {state -> viewModel.updateUiState(state) },
-        sliderValues = viewModel.sliderValues,
-        adoptionDateMenuOptions = viewModel.adoptionDateMenuOptions,
-        locationMenuOptions = viewModel.locationMenuOptions,
-        plantTypeMenuOptions = viewModel.plantTypeMenuOptions,
+        onNameUpdated = { name -> viewModel.updateName(name) },
+        onSliderUpdated = { tag, sliderPos -> viewModel.updateSliderValue(tag, sliderPos) },
+        onDropdownMenuUpdated = { tag, value -> viewModel.updateDropdownMenu(tag, value) },
         onBack = onBack,
         onFabClicked = { viewModel.createPlantyEntry() },
         scaffoldState = scaffoldState
@@ -45,11 +43,9 @@ fun CreatePlantyView(
 @Composable
 private fun CreatePlantyView(
     uiState: CreatePlantyUiState,
-    onStateUpdate: (state: CreatePlantyUiState) -> Unit,
-    sliderValues: List<String>,
-    adoptionDateMenuOptions: List<String>,
-    locationMenuOptions: List<String>,
-    plantTypeMenuOptions: List<String>,
+    onNameUpdated: (name: String) -> Unit,
+    onSliderUpdated: (tag: SliderTag, value: Int) -> Unit,
+    onDropdownMenuUpdated: (tag: DropdownTag, value: String) -> Unit,
     onBack: () -> Unit,
     onFabClicked: () -> Unit,
     scaffoldState: ScaffoldState
@@ -57,21 +53,19 @@ private fun CreatePlantyView(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { CreatePlantyTopBar(onBack) },
-        floatingActionButton = { PlusFAB {
-            onFabClicked()
-            onBack()
-        } }
+        floatingActionButton = {
+            PlusFAB {
+                onFabClicked()
+                onBack()
+            }
+        }
     ) {
-        val createEntryCardUiModel = CreateEntryCardUiModel(
-            screenState = uiState,
-            onStateUpdate = onStateUpdate,
-            sliderValues = sliderValues,
-            adoptionDateMenuOptions = adoptionDateMenuOptions,
-            locationMenuOptions = locationMenuOptions,
-            plantTypeMenuOptions = plantTypeMenuOptions
+        CreateEntryCard(
+            uiState,
+            onNameUpdated,
+            onSliderUpdated,
+            onDropdownMenuUpdated
         )
-
-        CreateEntryCard(createEntryCardUiModel)
     }
 }
 
@@ -99,13 +93,11 @@ fun DefaultCreatePlantScreenPreview() {
     PlantyTheme {
         CreatePlantyView(
             uiState = uistate,
-            onStateUpdate = {},
+            onNameUpdated = {},
+            onSliderUpdated = { _, _ -> },
+            onDropdownMenuUpdated = { _, _ -> },
             onBack = {},
             onFabClicked = {},
-            sliderValues = listOf("very little", "little", "moderate", "lots", "tons"),
-            adoptionDateMenuOptions = listOf(),
-            locationMenuOptions = listOf(),
-            plantTypeMenuOptions = listOf(),
             scaffoldState = rememberScaffoldState()
         )
     }
