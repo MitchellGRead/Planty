@@ -19,8 +19,6 @@ import androidx.compose.material.icons.filled.Room
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.Yard
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,30 +30,22 @@ import com.example.planty.ui.theme.AndroidHint
 import com.example.planty.ui.theme.Dimen
 import com.example.planty.ui.theme.Shapes
 
-data class CreateEntryCardUiModel(
-    val screenState: CreatePlantyUiState,
-    val onStateUpdate: (state: CreatePlantyUiState) -> Unit,
-    val sliderValues: List<String>,
-    val adoptionDateMenuOptions: List<String>,
-    val locationMenuOptions: List<String>,
-    val plantTypeMenuOptions: List<String>
-)
+sealed class SliderTag
+object WaterSlider : SliderTag()
+object LightSlider : SliderTag()
+
+sealed class DropdownTag
+object AdoptionTag : DropdownTag()
+object LocationTag : DropdownTag()
+object PlantTypeTag : DropdownTag()
 
 @Composable
-internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
-    val screenState = cardUiModel.screenState
-
-    val (plantName, setPlantName) = remember { mutableStateOf(screenState.plantName) }
-    val (adoptionDate, setAdoptionDate) = remember { mutableStateOf(screenState.adoptionDate) }
-    val (waterReq, setWaterReq) = remember { mutableStateOf(screenState.waterReq) }
-    val (lightReq, setLightReq) = remember { mutableStateOf(screenState.lightReq) }
-    val (location, setLocation) = remember { mutableStateOf(screenState.location) }
-    val (plantType, setPlantType) = remember { mutableStateOf(screenState.plantType) }
-
-    val sliderValues = cardUiModel.sliderValues
-    val adoptionDateMenuOptions = cardUiModel.adoptionDateMenuOptions
-    val locationMenuOptions = cardUiModel.locationMenuOptions
-    val plantTypeMenuOptions = cardUiModel.plantTypeMenuOptions
+internal fun CreateEntryCard(
+    uiState: CreatePlantyUiState,
+    onNameUpdated: (name: String) -> Unit,
+    onSliderUpdated: (tag: SliderTag, value: Int) -> Unit,
+    onDropdownMenuUpdated: (tag: DropdownTag, value: String) -> Unit,
+) {
 
     Card(
         shape = Shapes.large,
@@ -70,79 +60,63 @@ internal fun CreateEntryCard(cardUiModel: CreateEntryCardUiModel) {
         ) {
             TextEntry(
                 label = R.string.Name,
-                text = plantName,
+                text = uiState.plantName,
                 leadingIcon = { Icon(imageVector = Icons.Filled.Label, contentDescription = "") },
-                onTextChanged = {
-                    setPlantName(it)
-                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(plantName = it))
-                }
+                onTextChanged = { onNameUpdated(it) }
             )
 
             MenuSpacer()
 
             MenuSlider(
-                sliderValues = sliderValues,
+                sliderValues = uiState.sliderValues,
+                sliderStartPosition = uiState.startingSliderPosition,
                 label = R.string.Water,
                 leadingIcon = { Icon(
                     painter = painterResource(id = R.drawable.water_drop),
                     contentDescription = "",
                     tint = AndroidHint
                 ) },
-                onSliderChange = {
-                    setWaterReq(sliderValues[it])
-                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(waterReq = waterReq))
-                }
+                onSliderChange = { onSliderUpdated(WaterSlider, it) }
             )
 
             MenuSpacer()
 
             MenuSlider(
-                sliderValues = sliderValues,
+                sliderValues = uiState.sliderValues,
+                sliderStartPosition = uiState.startingSliderPosition,
                 label = R.string.Light,
                 leadingIcon = { Icon(
                     imageVector = Icons.Filled.WbSunny,
                     contentDescription = "",
                     tint = AndroidHint
                 ) },
-                onSliderChange = {
-                    setLightReq(sliderValues[it])
-                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(lightReq = lightReq))
-                }
+                onSliderChange = { onSliderUpdated(LightSlider, it) }
             )
 
             MenuSpacer()
 
-            OutlinedDropdownMenu(
+            DropdownMenu(
                 label = R.string.Adoption_Date,
-                menuOptions = adoptionDateMenuOptions,
-                onOptionChanged = {
-                    setAdoptionDate(it)
-                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(adoptionDate = it))
-                },
+                menuOptions = uiState.adoptionMenuOptions,
+                onOptionChanged = { onDropdownMenuUpdated(AdoptionTag, it) },
                 leadingIcon = { Icon(imageVector = Icons.Filled.DateRange, contentDescription = "") }
             )
 
             MenuSpacer()
 
-            OutlinedDropdownMenu(
+            DropdownMenu(
                 label = R.string.Location,
-                menuOptions = locationMenuOptions,
-                onOptionChanged = {
-                    setLocation(it)
-                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(location = it))
-                },
+                menuOptions = uiState.locationMenuOptions,
+                onOptionChanged = { onDropdownMenuUpdated(LocationTag, it) },
                 leadingIcon = { Icon(imageVector = Icons.Filled.Room, contentDescription = "") }
             )
 
             MenuSpacer()
 
-            OutlinedDropdownMenu(
+            DropdownMenu(
                 label = R.string.Plant_Type,
-                menuOptions = plantTypeMenuOptions,
-                onOptionChanged = {
-                    setPlantType(it)
-                    cardUiModel.onStateUpdate(cardUiModel.screenState.copy(plantType = it))
-                },
+                menuOptions = uiState.plantTypeMenuOptions,
+                onOptionChanged = { onDropdownMenuUpdated(PlantTypeTag, it) },
                 leadingIcon = { Icon(imageVector = Icons.Filled.Yard, contentDescription = "") }
             )
         }
@@ -168,7 +142,8 @@ private fun TextEntry(
 @Composable
 private fun MenuSlider(
     @StringRes label: Int,
-    sliderValues: List<String>,
+    sliderValues: List<SliderValues>,
+    sliderStartPosition: Float,
     leadingIcon: @Composable (() -> Unit)? = null,
     onSliderChange: (Int) -> Unit
 ) {
@@ -187,11 +162,26 @@ private fun MenuSlider(
             )
         }
         DashedSlider(
-            sliderValues = sliderValues,
-            value = (sliderValues.size / 2).toFloat(),
+            sliderValues = sliderValues.map { it.value },
+            value = sliderStartPosition,
             onValueChange = { onSliderChange(it) }
         )
     }
+}
+
+@Composable
+private fun DropdownMenu(
+    @StringRes label: Int,
+    menuOptions: List<DropdownMenuOptions>,
+    onOptionChanged: (String) -> Unit,
+    leadingIcon: @Composable (() -> Unit)? = null,
+) {
+    OutlinedDropdownMenu(
+        label = label,
+        menuOptions = menuOptions.map { it.value },
+        onOptionChanged = onOptionChanged,
+        leadingIcon = leadingIcon
+    )
 }
 
 @Composable
@@ -203,13 +193,10 @@ private fun MenuSpacer() {
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun DefaultCreateEntryCardPreview() {
-    val cardUiModel = CreateEntryCardUiModel(
-        screenState = CreatePlantyUiState(),
-        onStateUpdate = {},
-        sliderValues = listOf("very little", "little", "moderate", "lots", "tons"),
-        adoptionDateMenuOptions = listOf(),
-        locationMenuOptions = listOf(),
-        plantTypeMenuOptions = listOf()
+    CreateEntryCard(
+        uiState = CreatePlantyUiState(),
+        onNameUpdated = {},
+        onSliderUpdated = {_, _ -> },
+        onDropdownMenuUpdated = {_, _ -> }
     )
-    CreateEntryCard(cardUiModel = cardUiModel)
 }
