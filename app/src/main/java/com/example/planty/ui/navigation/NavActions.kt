@@ -7,6 +7,10 @@ class NavActions(navController: NavController) {
         navController.navigate(CreateEntryScreen.route)
     }
 
+    val navigateToEntryInfo: (id: String) -> Unit = {
+        navController.navigate(EntryInfoScreen.route)
+    }
+
     val navigateUp: () -> Unit = {
         navController.navigateUp()
     }

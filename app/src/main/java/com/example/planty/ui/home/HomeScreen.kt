@@ -42,7 +42,8 @@ import timber.log.Timber
 @Composable
 fun HomeScreenView(
     viewModel: HomeViewModel,
-    onFabClicked: () -> Unit
+    onFabClicked: () -> Unit,
+    onPlantCardClicked: (id: String) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val currBottomNavRoute = remember { mutableStateOf(HomeScreen) }

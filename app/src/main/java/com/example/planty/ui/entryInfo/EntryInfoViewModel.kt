@@ -5,9 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 @HiltViewModel
-class EntryInfoViewModel : ViewModel() {
+class EntryInfoViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(EntryInfoUiState())
     val uiState: StateFlow<EntryInfoUiState>
         get() = _uiState.asStateFlow()
