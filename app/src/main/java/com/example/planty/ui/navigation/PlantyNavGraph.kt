@@ -29,8 +29,8 @@ fun PlantyNavGraph(
             val viewModel: HomeViewModel = hiltViewModel(it)
             HomeScreenView(
                 viewModel = viewModel,
-                onFabClicked = actions.navigateToCreateEntry,
-                onPlantCardClicked = actions.navigateToEntryInfo
+                navigateToCreateEntryScreen = actions.navigateToCreateEntry,
+                navigateToEntryInfoScreen = actions.navigateToEntryInfo
             )
         }
 
