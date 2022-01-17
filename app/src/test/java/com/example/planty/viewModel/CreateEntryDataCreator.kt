@@ -1,27 +1,17 @@
 package com.example.planty.viewModel
 
-import com.example.planty.ui.createEntry.CreatePlantyUiState
-import com.example.planty.ui.createEntry.SliderValues
+import com.example.planty.ui.createEntry.OutdoorEntryUiState
 
-const val PLANT_NAME = "Jerry"
-val WATER_REQ = SliderValues.MODERATE
-val LIGHT_REQ = SliderValues.MODERATE
-const val ADOPTION_DATE = "tomorrow"
 const val LOCATION = "bathroom"
-const val PLANT_TYPE = "cactus"
+const val CATEGORY = "cucumber"
+const val SEED_TYPE = "strawberry"
 
-fun createPlantyUiState(
-    plantName: String = PLANT_NAME,
-    waterReq: SliderValues = WATER_REQ,
-    lightReq: SliderValues = LIGHT_REQ,
-    adoptionDate: String = ADOPTION_DATE,
+fun createOutdoorEntryUiState(
     location: String = LOCATION,
-    plantType: String = PLANT_TYPE
-) = CreatePlantyUiState(
-    plantName = plantName,
-    waterReq = waterReq,
-    lightReq = lightReq,
-    adoptionDate = adoptionDate,
+    seedType: String = SEED_TYPE,
+    plantCategory: String = CATEGORY
+) = OutdoorEntryUiState(
     location = location,
-    plantType = plantType
+    seedType = seedType,
+    plantCategory = plantCategory
 )
