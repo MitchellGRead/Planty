@@ -16,34 +16,22 @@ import javax.inject.Inject
 class OutdoorEntryViewModel @Inject constructor(
     private val plantEntryRepo: PlantEntryRepo
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(CreatePlantyUiState())
-    val uiState: StateFlow<CreatePlantyUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(OutdoorEntryUiState())
+    val uiState: StateFlow<OutdoorEntryUiState> = _uiState.asStateFlow()
 
-    fun updateName(newName: String) {
-        updateUiState(_uiState.value.copy(plantName = newName))
+    fun updateLocation(location: String) {
+        updateUiState(_uiState.value.copy(location = location))
     }
 
-    fun updateSliderValue(tag: SliderTag, sliderPos: Int) {
-        with(_uiState.value) {
-            val sliderValue = sliderValues[sliderPos]
-            when (tag) {
-                LightSliderTag -> updateUiState(copy(lightReq = sliderValue))
-                WaterSliderTag -> updateUiState(copy(waterReq = sliderValue))
-            }
-        }
+    fun updateSeedType(seedType: String) {
+        updateUiState(_uiState.value.copy(seedType = seedType))
     }
 
-    fun updateDropdownMenu(tag: DropdownTag, newValue: String) {
-        with(_uiState.value) {
-            when (tag) {
-                AdoptionTag -> updateUiState(copy(adoptionDate = newValue))
-                LocationTag -> updateUiState(copy(location = newValue))
-                PlantTypeTag -> updateUiState(copy(plantType = newValue))
-            }
-        }
+    fun updatePlantCategory(plantCategory: String) {
+        updateUiState(_uiState.value.copy(plantCategory = plantCategory))
     }
 
-    private fun updateUiState(newState: CreatePlantyUiState) {
+    private fun updateUiState(newState: OutdoorEntryUiState) {
         _uiState.update { newState }
     }
 

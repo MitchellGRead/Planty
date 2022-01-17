@@ -31,9 +31,9 @@ fun CreateEntryView(
 
     CreateEntryView(
         uiState = uiState.value,
-        onNameUpdated = { name -> viewModel.updateName(name) },
-        onSliderUpdated = { tag, sliderPos -> viewModel.updateSliderValue(tag, sliderPos) },
-        onDropdownMenuUpdated = { tag, value -> viewModel.updateDropdownMenu(tag, value) },
+        onLocationUpdated = { location -> viewModel.updateLocation(location) },
+        onSeedTypeUpdated = { seedType -> viewModel.updateSeedType(seedType) },
+        onPlantCategoryUpdated = { plantCategory -> viewModel.updatePlantCategory(plantCategory) },
         onBack = onBack,
         onFabClicked = { viewModel.createPlantyEntry() },
         scaffoldState = scaffoldState
@@ -42,10 +42,10 @@ fun CreateEntryView(
 
 @Composable
 private fun CreateEntryView(
-    uiState: CreatePlantyUiState,
-    onNameUpdated: (name: String) -> Unit,
-    onSliderUpdated: (tag: SliderTag, value: Int) -> Unit,
-    onDropdownMenuUpdated: (tag: DropdownTag, value: String) -> Unit,
+    uiState: OutdoorEntryUiState,
+    onLocationUpdated: (location: String) -> Unit,
+    onSeedTypeUpdated: (seedType: String) -> Unit,
+    onPlantCategoryUpdated: (plantCategory: String) -> Unit,
     onBack: () -> Unit,
     onFabClicked: () -> Unit,
     scaffoldState: ScaffoldState
@@ -60,11 +60,11 @@ private fun CreateEntryView(
             }
         }
     ) {
-        CreateEntryCard(
+        OutdoorCreateEntryCard(
             uiState,
-            onNameUpdated,
-            onSliderUpdated,
-            onDropdownMenuUpdated
+            onLocationUpdated,
+            onSeedTypeUpdated,
+            onPlantCategoryUpdated
         )
     }
 }
@@ -88,14 +88,14 @@ private fun CreatePlantyTopBar(onBack: () -> Unit) {
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun DefaultCreateEntryScreenPreview() {
-    val uistate = CreatePlantyUiState()
+    val uistate = OutdoorEntryUiState()
 
     PlantyTheme {
         CreateEntryView(
             uiState = uistate,
-            onNameUpdated = {},
-            onSliderUpdated = { _, _ -> },
-            onDropdownMenuUpdated = { _, _ -> },
+            onLocationUpdated = {},
+            onSeedTypeUpdated = {},
+            onPlantCategoryUpdated = {},
             onBack = {},
             onFabClicked = {},
             scaffoldState = rememberScaffoldState()
