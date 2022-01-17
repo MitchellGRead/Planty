@@ -10,4 +10,5 @@ object Dimen {
 
     val Zero = 0.dp
     val Hundred = 100.dp
+    val TwoHundred = 200.dp
 }

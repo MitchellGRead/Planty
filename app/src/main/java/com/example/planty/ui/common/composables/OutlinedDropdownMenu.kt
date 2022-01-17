@@ -7,6 +7,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -27,7 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.toSize
+import com.example.planty.ui.theme.Dimen
 
 @Composable
 fun OutlinedDropdownMenu(
@@ -35,6 +38,7 @@ fun OutlinedDropdownMenu(
     menuOptions: List<String>,
     onOptionChanged: (String) -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
+    maxMenuHeight: Dp = Dimen.TwoHundred
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
     val (selectedOption, setSelectedOption) = remember { mutableStateOf("") }
@@ -60,7 +64,6 @@ fun OutlinedDropdownMenu(
                 contentDescription = ""
             )
             },
-            readOnly = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
@@ -75,6 +78,7 @@ fun OutlinedDropdownMenu(
             },
             modifier = Modifier
                 .width(with(LocalDensity.current) { dropDownSize.width.toDp() })
+                .requiredSizeIn(maxHeight = maxMenuHeight)
         ) {
             menuOptions.forEach { option ->
                 DropdownMenuItem(

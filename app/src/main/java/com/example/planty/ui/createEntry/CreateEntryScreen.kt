@@ -22,18 +22,18 @@ import com.example.planty.ui.theme.Dimen
 import com.example.planty.ui.theme.PlantyTheme
 
 @Composable
-fun CreatePlantyView(
-    viewModel: CreatePlantyViewModel,
+fun CreateEntryView(
+    viewModel: OutdoorEntryViewModel,
     onBack: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val scaffoldState = rememberScaffoldState()
 
-    CreatePlantyView(
+    CreateEntryView(
         uiState = uiState.value,
-        onNameUpdated = { name -> viewModel.updateName(name) },
-        onSliderUpdated = { tag, sliderPos -> viewModel.updateSliderValue(tag, sliderPos) },
-        onDropdownMenuUpdated = { tag, value -> viewModel.updateDropdownMenu(tag, value) },
+        onLocationUpdated = { location -> viewModel.updateLocation(location) },
+        onSeedTypeUpdated = { seedType -> viewModel.updateSeedType(seedType) },
+        onPlantCategoryUpdated = { plantCategory -> viewModel.updatePlantCategory(plantCategory) },
         onBack = onBack,
         onFabClicked = { viewModel.createPlantyEntry() },
         scaffoldState = scaffoldState
@@ -41,11 +41,11 @@ fun CreatePlantyView(
 }
 
 @Composable
-private fun CreatePlantyView(
-    uiState: CreatePlantyUiState,
-    onNameUpdated: (name: String) -> Unit,
-    onSliderUpdated: (tag: SliderTag, value: Int) -> Unit,
-    onDropdownMenuUpdated: (tag: DropdownTag, value: String) -> Unit,
+private fun CreateEntryView(
+    uiState: OutdoorEntryUiState,
+    onLocationUpdated: (location: String) -> Unit,
+    onSeedTypeUpdated: (seedType: String) -> Unit,
+    onPlantCategoryUpdated: (plantCategory: String) -> Unit,
     onBack: () -> Unit,
     onFabClicked: () -> Unit,
     scaffoldState: ScaffoldState
@@ -60,11 +60,11 @@ private fun CreatePlantyView(
             }
         }
     ) {
-        CreateEntryCard(
+        OutdoorCreateEntryCard(
             uiState,
-            onNameUpdated,
-            onSliderUpdated,
-            onDropdownMenuUpdated
+            onLocationUpdated,
+            onSeedTypeUpdated,
+            onPlantCategoryUpdated
         )
     }
 }
@@ -87,15 +87,15 @@ private fun CreatePlantyTopBar(onBack: () -> Unit) {
 @Preview(name = "default")
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DefaultCreatePlantScreenPreview() {
-    val uistate = CreatePlantyUiState()
+fun DefaultCreateEntryScreenPreview() {
+    val uistate = OutdoorEntryUiState()
 
     PlantyTheme {
-        CreatePlantyView(
+        CreateEntryView(
             uiState = uistate,
-            onNameUpdated = {},
-            onSliderUpdated = { _, _ -> },
-            onDropdownMenuUpdated = { _, _ -> },
+            onLocationUpdated = {},
+            onSeedTypeUpdated = {},
+            onPlantCategoryUpdated = {},
             onBack = {},
             onFabClicked = {},
             scaffoldState = rememberScaffoldState()
