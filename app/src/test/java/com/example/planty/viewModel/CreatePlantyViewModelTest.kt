@@ -3,7 +3,7 @@ package com.example.planty.viewModel
 import com.example.planty.MainCoroutineRule
 import com.example.planty.domain.PlantEntryRepo
 import com.example.planty.ui.createEntry.AdoptionTag
-import com.example.planty.ui.createEntry.CreatePlantyViewModel
+import com.example.planty.ui.createEntry.OutdoorEntryViewModel
 import com.example.planty.ui.createEntry.LightSliderTag
 import com.example.planty.ui.createEntry.LocationTag
 import com.example.planty.ui.createEntry.PlantTypeTag
@@ -26,11 +26,11 @@ class CreatePlantyViewModelTest {
 
     private val mockPlantEntryRepo: PlantEntryRepo = mock()
 
-    private lateinit var viewModel: CreatePlantyViewModel
+    private lateinit var viewModel: OutdoorEntryViewModel
 
     @Before
     fun setUp() {
-        viewModel = CreatePlantyViewModel(
+        viewModel = OutdoorEntryViewModel(
             plantEntryRepo = mockPlantEntryRepo
         )
     }

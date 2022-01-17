@@ -13,7 +13,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class CreatePlantyViewModel @Inject constructor(
+class OutdoorEntryViewModel @Inject constructor(
     private val plantEntryRepo: PlantEntryRepo
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CreatePlantyUiState())

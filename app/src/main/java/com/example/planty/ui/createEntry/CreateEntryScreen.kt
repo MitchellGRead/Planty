@@ -22,14 +22,14 @@ import com.example.planty.ui.theme.Dimen
 import com.example.planty.ui.theme.PlantyTheme
 
 @Composable
-fun CreatePlantyView(
-    viewModel: CreatePlantyViewModel,
+fun CreateEntryView(
+    viewModel: OutdoorEntryViewModel,
     onBack: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val scaffoldState = rememberScaffoldState()
 
-    CreatePlantyView(
+    CreateEntryView(
         uiState = uiState.value,
         onNameUpdated = { name -> viewModel.updateName(name) },
         onSliderUpdated = { tag, sliderPos -> viewModel.updateSliderValue(tag, sliderPos) },
@@ -41,7 +41,7 @@ fun CreatePlantyView(
 }
 
 @Composable
-private fun CreatePlantyView(
+private fun CreateEntryView(
     uiState: CreatePlantyUiState,
     onNameUpdated: (name: String) -> Unit,
     onSliderUpdated: (tag: SliderTag, value: Int) -> Unit,
@@ -87,11 +87,11 @@ private fun CreatePlantyTopBar(onBack: () -> Unit) {
 @Preview(name = "default")
 @Preview(name = "dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun DefaultCreatePlantScreenPreview() {
+fun DefaultCreateEntryScreenPreview() {
     val uistate = CreatePlantyUiState()
 
     PlantyTheme {
-        CreatePlantyView(
+        CreateEntryView(
             uiState = uistate,
             onNameUpdated = {},
             onSliderUpdated = { _, _ -> },
