@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.planty.R
-import com.example.planty.ui.common.composables.OutlinedDropdownMenu
 import com.example.planty.ui.theme.Dimen
 import com.example.planty.ui.theme.Shapes
 
@@ -66,65 +65,6 @@ internal fun OutdoorCreateEntryCard(
                 leadingIcon = { Icon(imageVector = Icons.Filled.List, contentDescription = "") },
                 onTextChanged = { onPlantCategoryUpdated(it) }
             )
-
-            OutlinedDropdownMenu(
-                label = R.string.Plant_Category,
-                menuOptions = listOf("Test","Test","Test","Test","Test",),
-                onOptionChanged = {}
-            )
-
-//            MenuSlider(
-//                sliderValues = uiState.sliderValues,
-//                sliderStartPosition = uiState.startingSliderPosition,
-//                label = R.string.Water,
-//                leadingIcon = { Icon(
-//                    painter = painterResource(id = R.drawable.water_drop),
-//                    contentDescription = "",
-//                    tint = AndroidHint
-//                ) },
-//                onSliderChange = { onSliderUpdated(WaterSliderTag, it) }
-//            )
-//
-//            MenuSpacer()
-//
-//            MenuSlider(
-//                sliderValues = uiState.sliderValues,
-//                sliderStartPosition = uiState.startingSliderPosition,
-//                label = R.string.Light,
-//                leadingIcon = { Icon(
-//                    imageVector = Icons.Filled.WbSunny,
-//                    contentDescription = "",
-//                    tint = AndroidHint
-//                ) },
-//                onSliderChange = { onSliderUpdated(LightSliderTag, it) }
-//            )
-//
-//            MenuSpacer()
-//
-//            OutlinedDropdownMenu(
-//                label = R.string.Adoption_Date,
-//                menuOptions = uiState.adoptionMenuOptions,
-//                onOptionChanged = { onDropdownMenuUpdated(AdoptionTag, it) },
-//                leadingIcon = { Icon(imageVector = Icons.Filled.DateRange, contentDescription = "") }
-//            )
-//
-//            MenuSpacer()
-//
-//            OutlinedDropdownMenu(
-//                label = R.string.Location,
-//                menuOptions = uiState.locationMenuOptions,
-//                onOptionChanged = { onDropdownMenuUpdated(LocationTag, it) },
-//                leadingIcon = { Icon(imageVector = Icons.Filled.Room, contentDescription = "") }
-//            )
-//
-//            MenuSpacer()
-//
-//            OutlinedDropdownMenu(
-//                label = R.string.Plant_Type,
-//                menuOptions = uiState.plantTypeMenuOptions,
-//                onOptionChanged = { onDropdownMenuUpdated(PlantTypeTag, it) },
-//                leadingIcon = { Icon(imageVector = Icons.Filled.Yard, contentDescription = "") }
-//            )
         }
     }
 }
