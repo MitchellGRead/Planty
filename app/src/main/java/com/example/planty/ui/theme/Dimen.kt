@@ -11,4 +11,9 @@ object Dimen {
     val Zero = 0.dp
     val Hundred = 100.dp
     val TwoHundred = 200.dp
+
+    // region Expandable Section Dimens
+    val ExpandableSectionArrowSize = 30.dp
+    val ExpandableSectionDividerThickness = 2.dp
+    // endregion
 }
