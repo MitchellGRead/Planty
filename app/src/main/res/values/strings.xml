@@ -7,8 +7,12 @@
     <string name="Navigate_Back">Navigate Back</string>
     <string name="Schedule">Schedule</string>
     <string name="loading_image_description">loading image</string>
-    <string name="DropDown">DropDown</string>
+
+    <!-- Create Entry Screen -->
     <string name="Location">Location</string>
     <string name="Seed_Type">Seed Type</string>
     <string name="Plant_Category">Plant Category</string>
+
+    <!-- Reusable Composables -->
+    <string name="Expandable_Section_Button">Expandable Section Button</string>
 </resources>
